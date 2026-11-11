@@ -1,0 +1,116 @@
+
+#include <iostream>
+using namespace std;
+
+#define SIZE 5
+
+class PriorityQueue {
+    int data[SIZE];
+    int priority[SIZE];
+    int count;
+
+public:
+    PriorityQueue() {
+        count = 0;
+    }
+
+    // Insert operation
+    void insert(int value, int p) {
+        if (count == SIZE) {
+            cout << "Priority Queue is Full!" << endl;
+            return;
+        }
+
+        data[count] = value;
+        priority[count] = p;
+        count++;
+
+        cout << value << " inserted successfully" << endl;
+    }
+
+    // Delete highest priority element
+    void deleteElement() {
+        if (count == 0) {
+            cout << "Priority Queue is Empty!" << endl;
+            return;
+        }
+
+        int pos = 0;
+
+        for (int i = 1; i < count; i++) {
+            if (priority[i] < priority[pos]) {
+                pos = i;
+            }
+        }
+
+        cout << "Deleted element: " << data[pos] << endl;
+
+        for (int i = pos; i < count - 1; i++) {
+            data[i] = data[i + 1];
+            priority[i] = priority[i + 1];
+        }
+
+        count--;
+    }
+
+    // Display operation
+    void display() {
+        if (count == 0) {
+            cout << "Priority Queue is Empty!" << endl;
+            return;
+        }
+
+        cout << "\nValue\tPriority" << endl;
+
+        for (int i = 0; i < count; i++) {
+            cout << data[i] << "\t"
+                 << priority[i] << endl;
+        }
+    }
+};
+
+int main() {
+    PriorityQueue pq;
+    int choice, value, p;
+
+    do {
+        cout << "\n--- PRIORITY QUEUE MENU ---";
+        cout << "\n1. Insert";
+        cout << "\n2. Delete";
+        cout << "\n3. Display";
+        cout << "\n4. Exit";
+
+        cout << "\nEnter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                cout << "Enter value: ";
+                cin >> value;
+
+                cout << "Enter priority: ";
+                cin >> p;
+
+                pq.insert(value, p);
+                break;
+
+            case 2:
+                pq.deleteElement();
+                break;
+
+            case 3:
+                pq.display();
+                break;
+
+            case 4:
+                cout << "Exiting...";
+                break;
+
+            default:
+                cout << "Invalid Choice!";
+        }
+
+    } while (choice != 4);
+
+    return 0;
+}
